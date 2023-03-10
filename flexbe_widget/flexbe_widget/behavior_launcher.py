@@ -207,7 +207,8 @@ def behavior_launcher_main(node_args=None):
             request.arg_keys.append('/'+k)
             request.arg_values.append(v)
         time.sleep(0.2)  # wait for publishers...
-        launcher._callback(request)
+        launch_behavior_thread = threading.Thread(target=launcher._callback, args=(request,))
+        launch_behavior_thread.start()
 
     # Wait for ctrl-c to stop the application
     rclpy.spin(launcher)
